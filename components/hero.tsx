@@ -62,7 +62,7 @@ function useTypewriter(words: string[], speed = 80, pause = 1800) {
 const QUICK_FACTS = [
   { icon: Briefcase, label: "Current Role", value: "SDE @ RapidFort", color: "#22d3ee" },
   { icon: GraduationCap, label: "Education", value: "B.Tech · NIT Jalandhar · 8.57 CGPA", color: "#a78bfa" },
-  { icon: Code2, label: "DSA", value: "500+ problems solved", color: "#34d399" },
+  { icon: Code2, label: "Focus", value: "Full-Stack · Backend · Agentic AI", color: "#34d399" },
 ]
 
 const TECH_CLOUD = [
