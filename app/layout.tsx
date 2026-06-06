@@ -28,10 +28,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f9f7f4' },
-    { media: '(prefers-color-scheme: dark)', color: '#0d0d12' },
-  ],
+  themeColor: '#080d1a',
   width: 'device-width',
   initialScale: 1,
 }
@@ -42,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} bg-background`}>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} style={{ backgroundColor: '#080d1a' }}>
       <body className="font-sans antialiased">{children}</body>
     </html>
   )
