@@ -1,0 +1,15 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @media (prefers-color-scheme: light) {
+      .bg { fill: #0d0d12; }
+      .fg { fill: #f9f7f4; }
+    }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #f9f7f4; }
+      .fg { fill: #0d0d12; }
+    }
+  </style>
+  <rect class="bg" width="180" height="180" rx="37"/>
+  <path class="fg" d="M 20 42 L 52 138 L 85 42 L 71 42 L 52 128 L 34 42 Z"/>
+  <path class="fg" d="M 95 42 L 160 42 L 160 56 L 135 56 L 135 138 L 121 138 L 121 56 L 95 56 Z"/>
+</svg>
