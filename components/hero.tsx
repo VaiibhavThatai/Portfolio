@@ -1,6 +1,7 @@
 "use client"
 
-import { ArrowDown, Mail, MapPin } from "lucide-react"
+import { useEffect, useState } from "react"
+import { ArrowRight, MapPin, Mail, Briefcase, GraduationCap, Code2 } from "lucide-react"
 
 function GithubIcon({ size = 14 }: { size?: number }) {
   return (
@@ -18,108 +19,260 @@ function LinkedinIcon({ size = 14 }: { size?: number }) {
   )
 }
 
+const ROLES = [
+  "Software Development Engineer",
+  "Backend Systems Builder",
+  "Open Source Contributor",
+  "Distributed Systems Enthusiast",
+]
+
+function useTypewriter(words: string[], speed = 80, pause = 1800) {
+  const [display, setDisplay] = useState("")
+  const [wordIdx, setWordIdx] = useState(0)
+  const [charIdx, setCharIdx] = useState(0)
+  const [deleting, setDeleting] = useState(false)
+
+  useEffect(() => {
+    const current = words[wordIdx]
+    const timeout = setTimeout(() => {
+      if (!deleting) {
+        setDisplay(current.slice(0, charIdx + 1))
+        if (charIdx + 1 === current.length) {
+          setTimeout(() => setDeleting(true), pause)
+        } else {
+          setCharIdx((c) => c + 1)
+        }
+      } else {
+        setDisplay(current.slice(0, charIdx - 1))
+        if (charIdx - 1 === 0) {
+          setDeleting(false)
+          setWordIdx((w) => (w + 1) % words.length)
+          setCharIdx(0)
+        } else {
+          setCharIdx((c) => c - 1)
+        }
+      }
+    }, deleting ? speed / 2 : speed)
+    return () => clearTimeout(timeout)
+  }, [charIdx, deleting, wordIdx, words, speed, pause])
+
+  return display
+}
+
+const QUICK_FACTS = [
+  { icon: Briefcase, label: "Current Role", value: "SDE @ RapidFort", color: "#22d3ee" },
+  { icon: GraduationCap, label: "Education", value: "B.Tech · NIT Jalandhar · 8.57 CGPA", color: "#a78bfa" },
+  { icon: Code2, label: "Focus", value: "Full-Stack · Backend · Agentic AI", color: "#34d399" },
+]
+
+const TECH_CLOUD = [
+  { name: "Python", color: "#22d3ee" },
+  { name: "Golang", color: "#a78bfa" },
+  { name: "TypeScript", color: "#34d399" },
+  { name: "Kubernetes", color: "#22d3ee" },
+  { name: "FastAPI", color: "#a78bfa" },
+  { name: "React", color: "#34d399" },
+  { name: "Docker", color: "#22d3ee" },
+  { name: "PostgreSQL", color: "#a78bfa" },
+]
+
 export default function Hero() {
-  const scrollToWork = () => {
-    document.querySelector("#work")?.scrollIntoView({ behavior: "smooth" })
+  const typedText = useTypewriter(ROLES)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => { setMounted(true) }, [])
+
+  const scrollTo = (id: string) => {
+    document.querySelector(id)?.scrollIntoView({ behavior: "smooth" })
   }
 
   return (
-    <section
-      id="about"
-      className="min-h-screen flex flex-col justify-center px-6 max-w-5xl mx-auto pt-14"
-    >
-      <div className="flex flex-col gap-6 py-24 md:py-32">
-        {/* Status pill */}
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-2 text-xs font-mono text-muted-foreground border border-border rounded-full px-3 py-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            Available for opportunities
-          </span>
-        </div>
-
-        {/* Name & title */}
-        <div className="flex flex-col gap-3">
-          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-foreground text-balance leading-tight">
-            Vaibhav Thatai
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground font-light tracking-tight">
-            Software Development Engineer
-          </p>
-        </div>
-
-        {/* Bio */}
-        <p className="max-w-2xl text-base md:text-lg text-muted-foreground leading-relaxed text-pretty">
-          I build high-impact backend systems and full-stack platforms. Currently at{" "}
-          <a
-            href="https://rapidfort.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-foreground underline underline-offset-4 decoration-border hover:decoration-accent transition-colors"
-          >
-            RapidFort
-          </a>
-          , where I lead development of container vulnerability scanning infrastructure — reducing triage time by 40% and
-          cutting processing overhead by 70%. I work primarily with Python, Go, and TypeScript, with a strong focus on
-          distributed systems and clean engineering.
-        </p>
-
-        {/* Meta */}
-        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-          <span className="flex items-center gap-1.5">
-            <MapPin size={13} />
-            Bengaluru, India
-          </span>
-          <a
-            href="https://github.com/VaiibhavThatai"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 hover:text-foreground transition-colors"
-          >
-            <GithubIcon size={13} />
-            VaiibhavThatai
-          </a>
-          <a
-            href="https://linkedin.com/in/vaiibhav-thatai"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 hover:text-foreground transition-colors"
-          >
-            <LinkedinIcon size={13} />
-            vaiibhav-thatai
-          </a>
-          <a
-            href="mailto:vaiibhavsthatai@gmail.com"
-            className="flex items-center gap-1.5 hover:text-foreground transition-colors"
-          >
-            <Mail size={13} />
-            vaiibhavsthatai@gmail.com
-          </a>
-        </div>
-
-        {/* CTAs */}
-        <div className="flex flex-wrap items-center gap-3 pt-2">
-          <button
-            onClick={scrollToWork}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-md hover:opacity-90 transition-opacity"
-          >
-            View Work
-            <ArrowDown size={14} />
-          </button>
-          <a
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault()
-              document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })
-            }}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium border border-border text-foreground rounded-md hover:bg-muted transition-colors"
-          >
-            Get in touch
-          </a>
-        </div>
+    <section id="about" className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+      {/* Extra hero-specific ambient layer on top of body background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div
+          className="absolute top-0 left-1/4 w-[700px] h-[500px] rounded-full opacity-20"
+          style={{ background: "radial-gradient(circle at 30% 40%, rgba(34,211,238,0.18) 0%, transparent 65%)", filter: "blur(40px)" }}
+        />
+        <div
+          className="absolute bottom-10 right-0 w-[500px] h-[500px] rounded-full opacity-15"
+          style={{ background: "radial-gradient(circle at 70% 60%, rgba(167,139,250,0.20) 0%, transparent 65%)", filter: "blur(50px)" }}
+        />
       </div>
 
-      {/* Divider line */}
-      <div className="border-t border-border w-full" />
+      <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-16 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+
+          {/* ── Left column ── */}
+          <div className={`flex flex-col gap-6 ${mounted ? "animate-fade-up" : "opacity-0"}`}>
+
+            {/* Status badge */}
+            <div>
+              <span
+                className="inline-flex items-center gap-2 text-xs font-mono px-3 py-1.5 rounded-full border"
+                style={{ borderColor: "rgba(52,211,153,0.4)", backgroundColor: "rgba(52,211,153,0.08)", color: "#34d399" }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#34d399] animate-pulse" />
+                Available for opportunities
+              </span>
+            </div>
+
+            {/* Name */}
+            <div className="flex flex-col gap-1">
+              <p className="font-mono text-sm text-[#7a8aaa] tracking-widest uppercase">Hello, I&apos;m</p>
+              <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-balance leading-none">
+                <span className="gradient-text">Vaibhav</span>
+                <br />
+                <span className="text-[#e8edf8]">Thatai</span>
+              </h1>
+            </div>
+
+            {/* Typewriter */}
+            <div className="flex items-center gap-2 h-7">
+              <span className="text-base md:text-lg text-[#7a8aaa] font-light">/&gt;</span>
+              <span className="text-base md:text-lg font-medium text-[#22d3ee]">{typedText}</span>
+              <span className="cursor-blink w-0.5 h-5 bg-[#22d3ee] rounded-full" />
+            </div>
+
+            {/* Bio */}
+            <p className="text-[#7a8aaa] leading-relaxed text-pretty max-w-xl">
+              Building high-impact backend systems and full-stack platforms. Focused on container
+              security, distributed systems, and clean engineering with Python, Go &amp; TypeScript.
+            </p>
+
+            {/* Social links */}
+            <div className="flex flex-wrap items-center gap-4 text-sm text-[#7a8aaa]">
+              <span className="flex items-center gap-1.5">
+                <MapPin size={13} className="text-[#22d3ee]" />
+                Bengaluru, India
+              </span>
+              <a href="https://github.com/VaiibhavThatai" target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-1.5 hover:text-[#e8edf8] transition-colors">
+                <GithubIcon size={13} />VaiibhavThatai
+              </a>
+              <a href="https://linkedin.com/in/vaiibhav-thatai" target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-1.5 hover:text-[#e8edf8] transition-colors">
+                <LinkedinIcon size={13} />vaiibhav-thatai
+              </a>
+              <a href="mailto:vaiibhavsthatai@gmail.com"
+                className="flex items-center gap-1.5 hover:text-[#e8edf8] transition-colors">
+                <Mail size={13} className="text-[#a78bfa]" />vaiibhavsthatai@gmail.com
+              </a>
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <button
+                onClick={() => scrollTo("#work")}
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 hover:opacity-90 hover:scale-[1.02]"
+                style={{ background: "linear-gradient(135deg, #22d3ee 0%, #a78bfa 100%)", color: "#0b0f1e" }}
+              >
+                View Work <ArrowRight size={15} />
+              </button>
+              <button
+                onClick={() => scrollTo("#contact")}
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg border text-[#e8edf8] hover:border-[#22d3ee]/50 hover:bg-white/5 transition-all duration-200"
+                style={{ borderColor: "rgba(255,255,255,0.12)" }}
+              >
+                Get in touch
+              </button>
+            </div>
+          </div>
+
+          {/* ── Right column — profile card ── */}
+          <div
+            className={`hidden lg:flex flex-col gap-4 ${mounted ? "animate-fade-up" : "opacity-0"}`}
+            style={{ animationDelay: "0.2s" }}
+          >
+            {/* Avatar + name banner */}
+            <div
+              className="rounded-2xl overflow-hidden glow-cyan"
+              style={{ border: "1px solid rgba(34,211,238,0.18)", background: "rgba(17,24,39,0.7)", backdropFilter: "blur(12px)" }}
+            >
+              {/* Top bar with gradient strip */}
+              <div className="h-1.5 w-full" style={{ background: "linear-gradient(90deg, #22d3ee 0%, #a78bfa 50%, #34d399 100%)" }} />
+
+              <div className="p-6 flex flex-col gap-5">
+                {/* Avatar row */}
+                <div className="flex items-center gap-4">
+                  <div
+                    className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl font-bold shrink-0"
+                    style={{ background: "linear-gradient(135deg, rgba(34,211,238,0.2) 0%, rgba(167,139,250,0.2) 100%)", border: "1px solid rgba(34,211,238,0.25)", color: "#22d3ee" }}
+                  >
+                    VT
+                  </div>
+                  <div>
+                    <p className="text-base font-bold text-[#e8edf8]">Vaibhav Thatai</p>
+                    <p className="text-sm text-[#7a8aaa] mt-0.5">Software Development Engineer</p>
+                    <span className="inline-flex items-center gap-1.5 text-xs text-[#34d399] mt-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#34d399] animate-pulse" />
+                      Open to roles
+                    </span>
+                  </div>
+                </div>
+
+                {/* Divider */}
+                <div style={{ height: "1px", background: "rgba(255,255,255,0.06)" }} />
+
+                {/* Quick facts */}
+                <div className="flex flex-col gap-3">
+                  {QUICK_FACTS.map(({ icon: Icon, label, value, color }) => (
+                    <div key={label} className="flex items-start gap-3">
+                      <div
+                        className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
+                        style={{ backgroundColor: `${color}18`, border: `1px solid ${color}30` }}
+                      >
+                        <Icon size={14} style={{ color }} />
+                      </div>
+                      <div>
+                        <p className="text-xs text-[#7a8aaa]">{label}</p>
+                        <p className="text-sm font-medium text-[#e8edf8] mt-0.5">{value}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Divider */}
+                <div style={{ height: "1px", background: "rgba(255,255,255,0.06)" }} />
+
+                {/* Tech cloud */}
+                <div>
+                  <p className="text-xs font-mono text-[#7a8aaa] uppercase tracking-widest mb-3">Tech Stack</p>
+                  <div className="flex flex-wrap gap-2">
+                    {TECH_CLOUD.map(({ name, color }) => (
+                      <span
+                        key={name}
+                        className="text-xs font-mono px-2.5 py-1 rounded-full"
+                        style={{ backgroundColor: `${color}12`, border: `1px solid ${color}28`, color: `${color}dd` }}
+                      >
+                        {name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mini stat strip below the card */}
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { value: "2+", label: "Years Experience", color: "#22d3ee" },
+                { value: "98.94", label: "JEE Percentile", color: "#a78bfa" },
+                { value: "500+", label: "DSA Problems", color: "#34d399" },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-xl p-4 text-center"
+                  style={{ backgroundColor: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                >
+                  <p className="text-xl font-bold font-mono" style={{ color: stat.color }}>{stat.value}</p>
+                  <p className="text-xs text-[#7a8aaa] mt-1 leading-tight">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   )
 }
