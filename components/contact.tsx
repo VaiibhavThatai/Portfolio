@@ -105,12 +105,18 @@ export default function Contact() {
 
         {/* Right — form */}
         <div
-          className="rounded-2xl p-6 md:p-8"
+          className="rounded-2xl p-6 md:p-8 relative"
           style={{
             background: "linear-gradient(135deg, rgba(6,182,212,0.06) 0%, rgba(139,92,246,0.04) 100%)",
             border: "1px solid rgba(6,182,212,0.18)",
           }}
         >
+          <span
+            className="absolute top-4 right-4 text-xs font-mono px-2 py-0.5 rounded-full"
+            style={{ backgroundColor: "rgba(251,191,36,0.12)", border: "1px solid rgba(251,191,36,0.3)", color: "#fbbf24" }}
+          >
+            WIP
+          </span>
           {sent ? (
             <div className="flex flex-col items-center justify-center h-full gap-4 py-16 text-center">
               <div
