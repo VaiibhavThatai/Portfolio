@@ -88,7 +88,7 @@ export default function Navbar() {
         {/* Resume button + mobile toggle */}
         <div className="flex items-center gap-3">
           <a
-            href="https://drive.google.com/file/d/1EKUlnpEQmcr4OhJUXjD-PZHy1-tH0xFB/view"
+            href="https://drive.google.com/drive/folders/17NnQamvNud87VHcJaaxHTFUtSsn3ftSG?usp=drive_link"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium rounded-md border border-[#22d3ee]/40 text-[#22d3ee] hover:bg-[#22d3ee]/10 transition-all duration-200"
