@@ -14,9 +14,9 @@ const EXPERIENCES = [
     stack: ["Python", "Golang", "JavaScript", "FastAPI", "PostgreSQL", "Docker", "Kubernetes", "Redis"],
     bullets: [
       "Led development of RapidFort's container vulnerability scanning platform, powering detection across Linux-based container ecosystems.",
-      "Built a cross-advisory vulnerability intelligence platform using FastAPI, React.js, PostgreSQL, and Kubernetes — reducing analyst triage time by 40%.",
+      { text: "Built a cross-advisory vulnerability intelligence platform using FastAPI, React.js, PostgreSQL, and Kubernetes — reducing analyst triage time by 40%.", href: "http://172.234.31.216/vuln-db/" },
       "Designed JIRA workflow integrations for intelligent issue creation, SLA tracking, and remediation — reducing manual operations overhead by 65%.",
-      "Contributed to open-source vulnerability scanning ecosystems: Aquasecurity and Anchore.",
+      { text: "Contributed to open-source vulnerability scanning ecosystems: Aquasecurity and Anchore.", href: "https://github.com/aquasecurity/trivy/pull/10452" },
       "Delivered 70%+ reduction in scanning engine processing time through algorithmic improvements and parallelization.",
     ],
   },
@@ -144,15 +144,32 @@ export default function Work() {
 
                   {/* Bullets */}
                   <ul className="flex flex-col gap-2.5">
-                    {exp.bullets.map((bullet, j) => (
-                      <li key={j} className="flex items-start gap-2.5 text-sm leading-relaxed" style={{ color: "#7a8aaa" }}>
-                        <span
-                          className="mt-2 w-1.5 h-1.5 rounded-full shrink-0"
-                          style={{ backgroundColor: i === 0 ? "#22d3ee" : "#a78bfa" }}
-                        />
-                        {bullet}
-                      </li>
-                    ))}
+                    {exp.bullets.map((bullet, j) => {
+                      const isLink = typeof bullet === "object"
+                      const accent = i === 0 ? "#22d3ee" : "#a78bfa"
+                      return (
+                        <li key={j} className="flex items-start gap-2.5 text-sm leading-relaxed" style={{ color: "#7a8aaa" }}>
+                          <span
+                            className="mt-2 w-1.5 h-1.5 rounded-full shrink-0"
+                            style={{ backgroundColor: accent }}
+                          />
+                          {isLink ? (
+                            <a
+                              href={(bullet as { text: string; href: string }).href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 transition-colors hover:underline"
+                              style={{ color: "#7a8aaa" }}
+                              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = accent)}
+                              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#7a8aaa")}
+                            >
+                              {(bullet as { text: string; href: string }).text}
+                              <ArrowUpRight size={12} className="shrink-0" />
+                            </a>
+                          ) : bullet}
+                        </li>
+                      )
+                    })}
                   </ul>
 
                   {/* Stack */}
