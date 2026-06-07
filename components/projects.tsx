@@ -20,6 +20,7 @@ const PROJECTS = [
       "Open-source multiplayer web game featuring real-time role assignment, dynamic game rooms, player stats, and customizable word packs.",
     stack: ["React.js", "TypeScript", "Material UI"],
     githubUrl: "https://github.com/VaiibhavThatai",
+    liveUrl: "https://undercover-beta.netlify.app/",
     accent: "#22d3ee",
     tag: "Open Source",
   },
@@ -108,27 +109,50 @@ export default function Projects() {
                 </h3>
                 <p className="text-xs font-mono" style={{ color: "#7a8aaa" }}>{project.period}</p>
               </div>
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`View ${project.name} on GitHub`}
-                className="flex items-center gap-1 p-2 rounded-lg transition-all duration-200 shrink-0"
-                style={{ color: "#7a8aaa", backgroundColor: "rgba(255,255,255,0.04)" }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.color = project.accent
-                  el.style.backgroundColor = `${project.accent}15`
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.color = "#7a8aaa"
-                  el.style.backgroundColor = "rgba(255,255,255,0.04)"
-                }}
-              >
-                <GithubIcon size={14} />
-                <ArrowUpRight size={12} />
-              </a>
+              <div className="flex items-center gap-2 shrink-0">
+                {"liveUrl" in project && project.liveUrl && (
+                  <a
+                    href={project.liveUrl as string}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`View ${project.name} live`}
+                    className="flex items-center gap-1 p-2 rounded-lg transition-all duration-200"
+                    style={{ color: "#7a8aaa", backgroundColor: "rgba(255,255,255,0.04)" }}
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget as HTMLElement
+                      el.style.color = project.accent
+                      el.style.backgroundColor = `${project.accent}15`
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget as HTMLElement
+                      el.style.color = "#7a8aaa"
+                      el.style.backgroundColor = "rgba(255,255,255,0.04)"
+                    }}
+                  >
+                    <ArrowUpRight size={14} />
+                  </a>
+                )}
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View ${project.name} on GitHub`}
+                  className="flex items-center gap-1 p-2 rounded-lg transition-all duration-200"
+                  style={{ color: "#7a8aaa", backgroundColor: "rgba(255,255,255,0.04)" }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLElement
+                    el.style.color = project.accent
+                    el.style.backgroundColor = `${project.accent}15`
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLElement
+                    el.style.color = "#7a8aaa"
+                    el.style.backgroundColor = "rgba(255,255,255,0.04)"
+                  }}
+                >
+                  <GithubIcon size={14} />
+                </a>
+              </div>
             </div>
 
             {/* Description */}
